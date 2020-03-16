@@ -1,0 +1,10 @@
+# ignore the files
+#*.csv
+#*.ipynb
+neat-checkpoint*
+*gv
+*svg
+
+# ignore the folders
+*.ipynb_checkpoints/
+__pycache__/
