@@ -4,6 +4,7 @@
 neat-checkpoint*
 *gv
 *svg
+!*gv.svg
 
 # ignore the folders
 *.ipynb_checkpoints/
