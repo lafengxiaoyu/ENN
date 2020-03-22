@@ -9,3 +9,5 @@ neat-checkpoint*
 # ignore the folders
 *.ipynb_checkpoints/
 __pycache__/
+venv/
+.vscode/
