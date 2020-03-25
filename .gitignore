@@ -2,7 +2,7 @@
 #*.csv
 #*.ipynb
 neat-checkpoint*
-
+.DS_Store
 
 # ignore the folders
 *.ipynb_checkpoints/
