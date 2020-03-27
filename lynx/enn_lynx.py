@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
-df=pd.read_csv('lynx_train_X.csv', sep=' ',header=None)
+
+inputs = "7"
+
+df=pd.read_csv(inputs + 'lynx_train_X.csv', sep=' ',header=None)
 new_train_X = df.values
-df=pd.read_csv('lynx_train_Y.csv', sep=' ',header=None)
+df=pd.read_csv(inputs + 'lynx_train_Y.csv', sep=' ',header=None)
 new_train_Y = df.values
 
 X_train_inputs = []
@@ -70,7 +73,7 @@ def run(config_file):
 
     # Run for up to 300 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 10000)
+    winner = p.run(pe.evaluate, 500)
 
     # Display the winning genome.
     print("\nBest genome:\n{!s}".format(winner))
@@ -83,7 +86,7 @@ def run(config_file):
         print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
     
     
-    df=pd.read_csv('lynx_test_X.csv', sep=' ',header=None)
+    df=pd.read_csv(inputs + 'lynx_test_X.csv', sep=' ',header=None)
     new_test_X = df.values
     X_test_inputs = []
     for i in range(len(new_test_X)):
@@ -94,9 +97,14 @@ def run(config_file):
         output = winner_net.activate(xi)
         predictions_enn.append(output)
 
-    np.savetxt('predictions_enn.csv', np.array(predictions_enn), delimiter=',')
+    np.savetxt(inputs + 'predictions_enn.csv', np.array(predictions_enn), delimiter=',')
+    real_y=pd.read_csv(inputs + 'lynx_test_Y.csv', sep=' ',header=None)
+    mse = np.sum((np.array(real_y) - predictions_enn)**2)/(len(predictions_enn))
+    mae = np.average(np.abs(np.array(real_y) - predictions_enn))
+    print("MSE:", mse)
+    print("MAE:", mae)
 
-    node_names = {-1: "-7", -2: "-6", -3: "-5", -4:"-4", -5:"-3", -6:"-2", -7:"-1",0: "Target"}
+    node_names = {-1: "t-7", -2: "t-6", -3: "t-5", -4:"t-4", -5:"t-3", -6:"t-2", -7:"t-1",0: "Target"}
     visualize.draw_net(config, winner, True, node_names=node_names)
     visualize.plot_stats(stats, ylog=False, view=True)
     visualize.plot_species(stats, view=True)

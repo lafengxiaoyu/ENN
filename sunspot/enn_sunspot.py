@@ -69,7 +69,7 @@ def run(config_file):
 
     # Run for up to 300 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 100)
+    winner = p.run(pe.evaluate, 500)
 
     # Display the winning genome.
     print("\nBest genome:\n{!s}".format(winner))
@@ -81,7 +81,7 @@ def run(config_file):
         output = winner_net.activate(xi)
         print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
         
-    node_names = {-1: "-8", -2: "-7", -3: "-6", -4: "-5", -5:"-4", -6:"-3", -7:"-2", -8:"-1",0: "Target"}
+    node_names = {-1: "t-8", -2: "t-7", -3: "t-6", -4: "t-5", -5:"t-4", -6:"t-3", -7:"t-2", -8:"t-1",0: "Target"}
     visualize.draw_net(config, winner, True, node_names=node_names)
     visualize.plot_stats(stats, ylog=False, view=True)
     visualize.plot_species(stats, view=True)
