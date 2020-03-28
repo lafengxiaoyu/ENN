@@ -1,7 +1,11 @@
 import pandas as pd
-df=pd.read_csv('new_train_X.csv', sep=' ',header=None)
+import numpy as np
+
+inputs = "12"
+
+df=pd.read_csv(inputs + 'sunspot_train_X.csv', sep=' ',header=None)
 new_train_X = df.values
-df=pd.read_csv('new_train_Y.csv', sep=' ',header=None)
+df=pd.read_csv(inputs + 'sunspot_train_Y.csv', sep=' ',header=None)
 new_train_Y = df.values
 
 X_train_inputs = []
@@ -80,7 +84,26 @@ def run(config_file):
     for xi, xo in zip(xor_inputs, xor_outputs):
         output = winner_net.activate(xi)
         print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
-        
+
+    df=pd.read_csv(inputs + 'sunspot_test_X.csv', sep=' ',header=None)
+    new_test_X = df.values
+    X_test_inputs = []
+    for i in range(len(new_test_X)):
+        X_test_inputs.append(tuple(new_test_X[i]))
+
+    predictions_enn = []
+    for xi in X_test_inputs:
+        output = winner_net.activate(xi)
+        predictions_enn.append(output)
+
+    np.savetxt(inputs + 'predictions_enn.csv', np.array(predictions_enn), delimiter=',')
+    real_y=pd.read_csv(inputs + 'sunspot_test_Y.csv', sep=' ',header=None)
+    mse = np.sum((np.array(real_y) - predictions_enn)**2)/(len(predictions_enn))
+    mae = np.average(np.abs(np.array(real_y) - predictions_enn))
+    print("MSE:", mse)
+    print("MAE:", mae)
+
+
     node_names = {-1: "t-8", -2: "t-7", -3: "t-6", -4: "t-5", -5:"t-4", -6:"t-3", -7:"t-2", -8:"t-1",0: "Target"}
     visualize.draw_net(config, winner, True, node_names=node_names)
     visualize.plot_stats(stats, ylog=False, view=True)
