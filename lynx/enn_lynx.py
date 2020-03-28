@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-inputs = "7"
+inputs = "12"
 
 df=pd.read_csv(inputs + 'lynx_train_X.csv', sep=' ',header=None)
 new_train_X = df.values
@@ -49,7 +49,9 @@ def eval_genome(genome, config):
     for xi, xo in zip(xor_inputs, xor_outputs):
         output = net.activate(xi)
         error -= (output[0] - xo[0]) ** 2
+        # error -= np.abs(output[0] - xo[0])
     mse = error/L
+    # mad = error/L
     return mse
 
 
@@ -106,8 +108,8 @@ def run(config_file):
 
     node_names = {-1: "t-7", -2: "t-6", -3: "t-5", -4:"t-4", -5:"t-3", -6:"t-2", -7:"t-1",0: "Target"}
     visualize.draw_net(config, winner, True, node_names=node_names)
-    visualize.plot_stats(stats, ylog=False, view=True)
-    visualize.plot_species(stats, view=True)
+    visualize.plot_stats(stats, ylog=False, view=False)
+    visualize.plot_species(stats, view=False)
 
 
 
