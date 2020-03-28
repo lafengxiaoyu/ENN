@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-inputs = "12"
+inputs = "7"
 
 df=pd.read_csv(inputs + 'lynx_train_X.csv', sep=' ',header=None)
 new_train_X = df.values
