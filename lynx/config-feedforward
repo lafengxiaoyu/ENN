@@ -28,17 +28,17 @@ bias_replace_rate       = 0.2
 
 # genome compatibility options
 compatibility_disjoint_coefficient = 1.0
-compatibility_weight_coefficient   = 0.8
+compatibility_weight_coefficient   = 1.0
 
 # connection add/remove rates
-conn_add_prob           = 0.6
-conn_delete_prob        = 0.3
+conn_add_prob           = 0.7
+conn_delete_prob        = 0.1
 
 # connection enable options
 enabled_default         = True
 enabled_mutate_rate     = 0.1
 
-feed_forward            = True
+feed_forward            = False
 initial_connection      = full_nodirect
 
 # node add/remove rates
