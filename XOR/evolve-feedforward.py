@@ -59,8 +59,8 @@ def run(config_file):
     visualize.plot_stats(stats, ylog=False, view=True)
     visualize.plot_species(stats, view=True)
 
-    p = neat.Checkpointer.restore_checkpoint("neat-checkpoint-4")
-    p.run(eval_genomes, 10)
+    #p = neat.Checkpointer.restore_checkpoint("neat-checkpoint-4")
+    p.run(eval_genomes, 100)
 
 
 if __name__ == "__main__":
