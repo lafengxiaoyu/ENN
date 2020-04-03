@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 inputs = "7"
 
@@ -76,41 +76,9 @@ def run(config_file):
 
     # Run for up to 300 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 200)
+    winner = p.run(pe.evaluate, 2000)
 
-    # Display the winning genome.
-    print("\nBest genome:\n{!s}".format(winner))
-
-    # Show output of the most fit genome against training data.
-    print("\nOutput:")
-    winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
-    for xi, xo in zip(xor_inputs, xor_outputs):
-        output = winner_net.activate(xi)
-        print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
-    
-    
-    df=pd.read_csv(inputs + 'lynx_test_X.csv', sep=' ',header=None)
-    new_test_X = df.values
-    X_test_inputs = []
-    for i in range(len(new_test_X)):
-        X_test_inputs.append(tuple(new_test_X[i]))
-
-    predictions_enn = []
-    for xi in X_test_inputs:
-        output = winner_net.activate(xi)
-        predictions_enn.append(output)
-
-    np.savetxt(inputs + 'predictions_enn.csv', np.array(predictions_enn), delimiter=',')
-    real_y=pd.read_csv(inputs + 'lynx_test_Y.csv', sep=' ',header=None)
-    mse = np.sum((np.array(real_y) - predictions_enn)**2)/(len(predictions_enn))
-    mae = np.average(np.abs(np.array(real_y) - predictions_enn))
-    print("MSE:", mse)
-    print("MAE:", mae)
-
-    node_names = {-1: "t-7", -2: "t-6", -3: "t-5", -4:"t-4", -5:"t-3", -6:"t-2", -7:"t-1",0: "Target"}
-    visualize.draw_net(config, winner, True, node_names=node_names)
-    visualize.plot_stats(stats, ylog=False, view=False)
-    visualize.plot_species(stats, view=False)
+    return stats
 
 
 
@@ -122,4 +90,27 @@ if __name__ == "__main__":
     # current working directory.
     local_dir = os.getcwd()
     config_path = os.path.join(local_dir, "config-feedforward")
-    run(config_path)
+    
+    stats_list = []
+    for i in range(10):
+        stats = run(config_path)
+        stats_list.append(stats)
+        
+
+    avg_fitness_list = []
+    best_list = []
+
+    for i in range(10):
+        generation = range(len(stats_list[i].get_fitness_mean()))
+        avg_fitness = np.array(stats_list[i].get_fitness_mean())
+        avg_fitness_list.append(avg_fitness)
+        best_fitness = [c.fitness for c in stats_list[i].most_fit_genomes]
+        best_list.append(best_fitness)
+        
+        plt.plot(generation, avg_fitness, alpha = 0.4)
+
+    plt.plot(generation, np.average(np.array(avg_fitness_list),axis = 0), label="Average")
+    plt.plot(generation, np.average(np.array(best_list),axis = 0), label="Best")
+
+
+    plt.savefig('average10times.png')
