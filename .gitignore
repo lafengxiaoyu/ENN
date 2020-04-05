@@ -3,7 +3,7 @@
 #*.ipynb
 neat-checkpoint*
 .DS_Store
-lynx/speciation.svg
+speciation.svg
 
 # ignore the folders
 *.ipynb_checkpoints/
