@@ -1,5 +1,26 @@
 digraph {
 	node [fontsize=9 height=0.2 shape=circle width=0.2]
+<<<<<<< HEAD
+	"t-7" [fillcolor=lightgray shape=box style=filled]
+	"t-6" [fillcolor=lightgray shape=box style=filled]
+	"t-5" [fillcolor=lightgray shape=box style=filled]
+	"t-4" [fillcolor=lightgray shape=box style=filled]
+	"t-3" [fillcolor=lightgray shape=box style=filled]
+	"t-2" [fillcolor=lightgray shape=box style=filled]
+	"t-1" [fillcolor=lightgray shape=box style=filled]
+	Target [fillcolor=lightblue style=filled]
+	876 [fillcolor=white style=filled]
+	1557 [fillcolor=white style=filled]
+	1782 [fillcolor=white style=filled]
+	"t-1" -> Target [color=green penwidth=0.33155839564327594 style=solid]
+	"t-1" -> 876 [color=green penwidth=0.6437716008553123 style=solid]
+	"t-4" -> Target [color=green penwidth=0.38417083079822156 style=dotted]
+	"t-3" -> Target [color=red penwidth=0.3342334052895466 style=solid]
+	"t-7" -> 1557 [color=red penwidth=0.19564307179500778 style=dotted]
+	"t-4" -> 876 [color=green penwidth=0.4193418057149131 style=solid]
+	"t-7" -> 1782 [color=red penwidth=0.17563167677588523 style=solid]
+	1782 -> 1557 [color=red penwidth=0.20111156596730279 style=solid]
+=======
 	-1 [fillcolor=lightgray shape=box style=filled]
 	-2 [fillcolor=lightgray shape=box style=filled]
 	-3 [fillcolor=lightgray shape=box style=filled]
@@ -11,4 +32,5 @@ digraph {
 	-2 -> 0 [color=red penwidth=0.43765666977263007 style=solid]
 	-7 -> 0 [color=green penwidth=0.36455551979347467 style=solid]
 	-6 -> 0 [color=red penwidth=0.24701100244611104 style=solid]
+>>>>>>> 12b935e084f2c3a71b590aaf988731e6a9597cb1
 }

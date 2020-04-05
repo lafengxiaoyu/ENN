@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 
 inputs = "7"
 
-df=pd.read_csv(inputs + 'lynx_train_X.csv', sep=' ',header=None)
+df=pd.read_csv('csvs/' + inputs + 'lynx_train_X.csv', sep=' ',header=None)
 new_train_X = df.values
-df=pd.read_csv(inputs + 'lynx_train_Y.csv', sep=' ',header=None)
+df=pd.read_csv('csvs/' + inputs + 'lynx_train_Y.csv', sep=' ',header=None)
 new_train_Y = df.values
 
 X_train_inputs = []

@@ -1,8 +1,6 @@
-#--- parameters for the XOR-2 experiment ---#
-
 [NEAT]
-fitness_criterion     = mean
-fitness_threshold     = -0.010
+fitness_criterion     = max
+fitness_threshold     = -0.0010
 pop_size              = 200
 reset_on_extinction   = False
 
@@ -80,4 +78,3 @@ species_elitism      = 1
 elitism            = 1
 survival_threshold = 0.2
 min_species_size = 2
-
