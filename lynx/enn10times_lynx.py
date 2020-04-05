@@ -108,6 +108,7 @@ if __name__ == "__main__":
         best_list.append(best_fitness)
         
         plt.plot(generation, avg_fitness, alpha = 0.4)
+        plt.plot(generation, best_fitness, alpha = 0.4)
 
     plt.plot(generation, np.average(np.array(avg_fitness_list),axis = 0), label="Average")
     plt.plot(generation, np.average(np.array(best_list),axis = 0), label="Best")

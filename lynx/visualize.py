@@ -9,7 +9,7 @@ import numpy as np
 warnings.filterwarnings("ignore")
 
 
-def plot_stats(statistics, ylog=False, view=False, filename="avg_fitness.svg"):
+def plot_stats(statistics, ylog=False, view=False, filename="avg_fitness.png"):
     """ Plots the population's average and best fitness. """
     if plt is None:
         warnings.warn(
@@ -91,7 +91,7 @@ def plot_spikes(spikes, view=False, filename=None, title=None):
     return fig
 
 
-def plot_species(statistics, view=False, filename="speciation.svg"):
+def plot_species(statistics, view=False, filename="speciation.png"):
     """ Visualizes speciation throughout evolution. """
     if plt is None:
         warnings.warn(
@@ -127,7 +127,7 @@ def draw_net(
     show_disabled=True,
     prune_unused=False,
     node_colors=None,
-    fmt="svg",
+    fmt="png",
 ):
     """ Receives a genome and draws a neural network with arbitrary topology. """
     # Attributes for network nodes.
