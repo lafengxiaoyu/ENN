@@ -84,7 +84,7 @@ def run(config_file):
 
     # Run for up to 300 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 200)
+    winner = p.run(pe.evaluate, 2000)
 
     return stats
 
@@ -121,5 +121,17 @@ if __name__ == "__main__":
     plt.plot(generation, np.average(np.array(avg_fitness_list),axis = 0), label="Average")
     plt.plot(generation, np.average(np.array(best_list),axis = 0), label="Best")
 
-
     plt.savefig('average10times.png')
+
+    species_list = []
+    for i in range(10):
+        species_sizes = stats_list[i].get_species_sizes()
+        species_number = []
+        for j in generation:
+            species_number.append(np.count_nonzero(species_sizes[j]))
+        plt.plot(species_number)
+        species_list.append(species_number)
+
+    plt.plot(generation, np.average(np.array(species_list),axis = 0), label="series")
+
+    plt.savefig('species10times.png')

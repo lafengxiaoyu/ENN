@@ -8,6 +8,8 @@ digraph {
 	"t-2" [fillcolor=lightgray shape=box style=filled]
 	"t-1" [fillcolor=lightgray shape=box style=filled]
 	Target [fillcolor=lightblue style=filled]
-	"t-4" -> Target [color=red penwidth=0.34608363957521127 style=solid]
-	"t-1" -> Target [color=green penwidth=0.24710208570951217 style=solid]
+	"t-5" -> Target [color=red penwidth=0.20458912396681306 style=solid]
+	"t-1" -> Target [color=green penwidth=0.35990489442101725 style=solid]
+	"t-2" -> Target [color=red penwidth=0.260915275439186 style=solid]
+	"t-3" -> Target [color=red penwidth=0.1580159987414048 style=dotted]
 }
