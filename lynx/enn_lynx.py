@@ -44,6 +44,7 @@ def eval_genome(genome, config):
     last few lines in the file), otherwise you'll have made a fork bomb
     instead of a neuroevolution demo. :)
     """
+    if_no_connect = True
 
     net = neat.nn.FeedForwardNetwork.create(genome, config)
     error = 0.0
@@ -51,7 +52,15 @@ def eval_genome(genome, config):
         output = net.activate(xi)
         error -= (output[0] - xo[0]) ** 2
         # error -= np.abs(output[0] - xo[0])
-    mse = error/L
+        if float(output[0]) != 0:
+            if_no_connect = False
+    
+    if if_no_connect:
+        mse = -1  
+    # there is no connection at all
+    else:
+        mse = error/L
+
     # mad = error/L
     return mse
 
@@ -76,7 +85,7 @@ def run(config_file):
 
     # Run for up to 300 generations.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, 2000)
+    winner = p.run(pe.evaluate, 1000)
 
     # Display the winning genome.
     print("\nBest genome:\n{!s}".format(winner))

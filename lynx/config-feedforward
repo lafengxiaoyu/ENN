@@ -37,7 +37,8 @@ enabled_default         = True
 enabled_mutate_rate     = 0.1
 
 feed_forward            = False
-initial_connection      = fs_neat_nohidden
+#initial_connection      = fs_neat_nohidden
+initial_connection      = unconnected
 
 # node add/remove rates
 node_add_prob           = 0.05
@@ -71,10 +72,10 @@ compatibility_threshold = 3.0
 
 [DefaultStagnation]
 species_fitness_func = median
-max_stagnation       = 15
-species_elitism      = 0
+max_stagnation       = 10
+species_elitism      = 1
 
 [DefaultReproduction]
-elitism            = 0
+elitism            = 1
 survival_threshold = 0.2
 # min_species_size = 2

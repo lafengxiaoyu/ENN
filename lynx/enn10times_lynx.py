@@ -44,6 +44,7 @@ def eval_genome(genome, config):
     last few lines in the file), otherwise you'll have made a fork bomb
     instead of a neuroevolution demo. :)
     """
+    if_no_connect = True
 
     net = neat.nn.FeedForwardNetwork.create(genome, config)
     error = 0.0
@@ -51,7 +52,14 @@ def eval_genome(genome, config):
         output = net.activate(xi)
         error -= (output[0] - xo[0]) ** 2
         # error -= np.abs(output[0] - xo[0])
-    mse = error/L
+        if float(output[0]) != 0:
+            if_no_connect = False
+    # there is no connection at all, return a very low value
+    if if_no_connect:
+        mse = -1  
+    else:
+        mse = error/L
+
     # mad = error/L
     return mse
 
