@@ -71,8 +71,8 @@ weight_replace_rate     = 0.1
 compatibility_threshold = 3.8
 
 [DefaultStagnation]
-species_fitness_func = median
-max_stagnation       = 50
+species_fitness_func = mean
+max_stagnation       = 20
 species_elitism      = 2
 
 [DefaultReproduction]

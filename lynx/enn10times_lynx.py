@@ -109,8 +109,8 @@ if __name__ == "__main__":
     best_list = []
 
     for i in range(10):
-        generation = range(len(stats_list[i].get_fitness_mean()))
-        avg_fitness = np.array(stats_list[i].get_fitness_mean())
+        generation = range(len(stats_list[i].get_fitness_median()))
+        avg_fitness = np.array(stats_list[i].get_fitness_median())
         avg_fitness_list.append(avg_fitness)
         best_fitness = [c.fitness for c in stats_list[i].most_fit_genomes]
         best_list.append(best_fitness)
