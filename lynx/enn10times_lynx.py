@@ -123,6 +123,7 @@ if __name__ == "__main__":
 
     plt.savefig('average10times.png')
 
+    plt.cla()
     species_list = []
     for i in range(10):
         species_sizes = stats_list[i].get_species_sizes()
