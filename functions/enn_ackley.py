@@ -1,36 +1,44 @@
 import pandas as pd
 import numpy as np
-
-
-inputs = "7"
-
-df=pd.read_csv('csvs/' + inputs + 'lynx_train_X.csv', sep=' ',header=None)
-new_train_X = df.values
-df=pd.read_csv('csvs/' +inputs + 'lynx_train_Y.csv', sep=' ',header=None)
-new_train_Y = df.values
-
-X_train_inputs = []
-Y_train_outputs = []
-
+import matplotlib.pyplot as plt
 import os
-os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
-
-# L = len(new_train_X)
-L = len(new_train_X)
-for i in range(L):
-    X_train_inputs.append(tuple(new_train_X[i]))
-for i in range(L):
-    Y_train_outputs.append(tuple(new_train_Y[i]))
-
 import multiprocessing
 import os
 import neat
 import visualize
 
 import warnings
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
-xor_inputs = X_train_inputs
-xor_outputs = Y_train_outputs
+def ackley(a):
+    d = len(a)
+    term1 = - 20 * np.exp(-0.2*np.sqrt(np.sum(a**2)/d))
+    term2 = - np.exp(np.sum(np.cos(a*2*np.pi))/d)
+    f = term1 + term2 + 20 + np.exp(1)
+    return f
+
+d = 2
+samplesize = 1000
+
+def sampleing():
+    x_inputs = []
+    x_outputs = []
+    list_outputs = []
+
+    for i in range(samplesize):
+        A = -32.768
+        B = 32.768#小数的范围A ~ B
+        a = np.random.uniform(A,B,d)
+        x_inputs.append(tuple(a/A))
+        y = ackley(a)
+        list_outputs.append(y)
+
+    for i in range(samplesize):
+        x_outputs.append(tuple([list_outputs[i]/np.max(list_outputs)]))
+    
+    return [x_inputs, x_outputs]
+
+[x_inputs, x_outputs] = sampleing()
 
 def eval_genome(genome, config):
     """
@@ -45,22 +53,23 @@ def eval_genome(genome, config):
     instead of a neuroevolution demo. :)
     """
     if_no_connect = True
-
+    
     net = neat.nn.FeedForwardNetwork.create(genome, config)
+
+    # [x_inputs, x_outputs] = sampleing()
+
     error = 0.0
-    for xi, xo in zip(xor_inputs, xor_outputs):
+    for xi, xo in zip(x_inputs, x_outputs):
         output = net.activate(xi)
-        error -= (output[0] - xo[0]) ** 2
-        # error -= np.abs(output[0] - xo[0])
+        # error -= (output[0] - xo[0]) ** 2
+        error -= np.abs(output[0] - xo[0])
         if float(output[0]) != 0:
             if_no_connect = False
     
     if if_no_connect:
-        mse = -1  
-    # there is no connection at all
+        mse = -1
     else:
-        mse = error/L
-
+        mse = error/samplesize
     # mad = error/L
     return mse
 
@@ -93,31 +102,16 @@ def run(config_file):
     # Show output of the most fit genome against training data.
     print("\nOutput:")
     winner_net = neat.nn.FeedForwardNetwork.create(winner, config)
-    for xi, xo in zip(xor_inputs, xor_outputs):
-        output = winner_net.activate(xi)
-        print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
+    #for xi, xo in zip(x_inputs, x_outputs):
+    #    output = winner_net.activate(xi)
+    #    print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
+    xi = tuple([0,0])
+    xo = [tuple([0])]
+    output = winner_net.activate(xi)
+    print("input {!r}, expected output {!r}, got {!r}".format(xi, xo, output))
+
     
-    
-    df=pd.read_csv('csvs/' +inputs + 'lynx_test_X.csv', sep=' ',header=None)
-    new_test_X = df.values
-    X_test_inputs = []
-    for i in range(len(new_test_X)):
-        X_test_inputs.append(tuple(new_test_X[i]))
-
-    predictions_enn = []
-    for xi in X_test_inputs:
-        output = winner_net.activate(xi)
-        predictions_enn.append(output)
-
-    np.savetxt('csvs/' +inputs + 'predictions_enn.csv', np.array(predictions_enn), delimiter=',')
-    real_y=pd.read_csv('csvs/' +inputs + 'lynx_test_Y.csv', sep=' ',header=None)
-    mse = np.sum((np.array(real_y) - predictions_enn)**2)/(len(predictions_enn))
-    mae = np.average(np.abs(np.array(real_y) - predictions_enn))
-    print("MSE:", mse)
-    print("MAE:", mae)
-
-    node_names = {-1: "t-7", -2: "t-6", -3: "t-5", -4:"t-4", -5:"t-3", -6:"t-2", -7:"t-1",0: "Target"}
-    visualize.draw_net(config, winner, True, node_names=node_names,fmt="png")
+    visualize.draw_net(config, winner, True,fmt="png")
     visualize.plot_stats(stats, ylog=False, view=False)
     visualize.plot_species(stats, view=False)
 
