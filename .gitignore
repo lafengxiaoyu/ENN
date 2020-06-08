@@ -4,9 +4,20 @@
 neat-checkpoint*
 .DS_Store
 speciation.svg
+*.jpg
 
 # ignore the folders
 *.ipynb_checkpoints/
 __pycache__/
 venv/
 .vscode/
+XOR/xoreach/
+*_diff/
+*each/
+*every/
+functions/
+bpusd/
+lynx/
+XOR/
+mnist/
+digits/
