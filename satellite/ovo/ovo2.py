@@ -493,6 +493,6 @@ total_nodes = np.sum(list_nodes_number)
 total_connections = np.sum(list_connection_number)
 print("Total nodes:{} Total connections::{}".format(total_nodes, total_connections))
 
-with open("ovo1.txt","w") as f:
+with open("ovo2.txt","w") as f:
     for item in [avg_train_acc, train_acc, test_acc, total_nodes, total_connections]:
         f.write(str(item)+'\n')

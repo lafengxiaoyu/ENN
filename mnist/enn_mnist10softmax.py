@@ -96,7 +96,7 @@ def run(config_file):
     #checkpointer = neat.Checkpointer(100)
     #p.add_reporter(checkpointer)
     # Run for up to 300 generations.
-    winner = p.run(eval_genomes, 2)
+    winner = p.run(eval_genomes, 1000)
 
     return [stats, winner]
 
@@ -104,7 +104,7 @@ def run(config_file):
 samplesize = len(x_outputs)
 
 local_dir = os.getcwd()
-config_path = os.path.join(local_dir, "config-feedforward-mnist10")
+config_path = os.path.join(local_dir, "config-feedforward-mnist10_2")
 [stats, winner] = run(config_path)
 
 config = neat.Config(
@@ -338,4 +338,4 @@ for layer in range(max_length):
     interval = max_nodes_one_layer/length_of_each_layer[layer]
     plt.scatter((interval * np.arange(length_of_each_layer[layer]))+ interval/2, [layer]*length_of_each_layer[layer])
 
-plt.savefig("nodes.png")
+plt.savefig("nodes_2.png")

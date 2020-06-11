@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from sklearn.datasets import load_digits
+
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
+
 digits = load_digits()
 
 
@@ -95,7 +98,7 @@ def run(config_file):
     #checkpointer = neat.Checkpointer(100)
     # p.add_reporter(checkpointer)
     # Run for up to 300 generations.
-    winner = p.run(eval_genomes, 100)
+    winner = p.run(eval_genomes, 1000)
 
     return [stats, winner]
 
